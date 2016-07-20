@@ -1,0 +1,122 @@
+@import '../i-less/variables';
+@import '../i-less/mymixins';
+@import '../i-less/mixins';
+
+@b: ~'.b-chat-summary';
+
+@{b} {
+    .display-flex();
+    .flex-direction(column);
+    .flex(1);
+    border-bottom: 1px solid #dfe4f0;
+    background-color: rgba(255, 255, 255, 0.9);
+    position: relative;
+    max-height: 20px;
+
+    &__header {
+        cursor: pointer;
+        color: #2b303a;
+        line-height: 18px;
+        padding: 0 24px;
+
+        &&:hover {
+            color: #5c6b7f;
+        }
+    }
+
+    &__title {
+        font-size: 11px;
+        margin-right: 4px;
+        font-weight: 500;
+    }
+
+    &__toggle-button {
+        font-size: 18px;
+        vertical-align: bottom;
+    }
+
+    &__title,
+    &__toggle-button {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    &__list {
+        .scrollbar(@c-border-steel2);
+        max-height: 100%;
+        overflow-y: auto;
+        display: none;
+        margin-top: 12px;
+        margin-bottom: 28px;
+
+        &_loading_yes {
+
+            @{b}__list-loader {
+                display: block;
+            }
+        }
+
+        &-loader-wrap {
+            height: 48px;
+            position: relative;
+        }
+
+        &-loader {
+            .size(32px);
+            .transform(translateX(-16px));
+            display: none;
+            position: absolute;
+            top: 35px;
+            left: 50%;
+
+            .b-circle-loader__first-bounce,
+            .b-circle-loader__second-bounce {
+                background-color: #B2BAC9;
+            }
+        }
+    }
+
+    &__drag-btn {
+        .absolute-bottom-left(0, 50%);
+        margin-left: -9px;
+        font-size: 18px;
+        color: #b2bac9;
+        cursor: ns-resize;
+    }
+
+    &_empty_yes {
+
+        @{b}__header {
+            color: #949fb1;
+            cursor: default;
+
+            &:hover {
+                color: #949fb1;
+            }
+        }
+    }
+
+    &_visibility-state_full {
+        background-color: #fff;
+        max-height: 100%;
+
+        @{b}__header {
+            color: #949fb1;
+            margin-top: 16px;
+            line-height: 20px;
+        }
+
+        @{b}__title {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        @{b}__list {
+            display: block;
+        }
+
+        @{b}__toggle-button {
+            .rotate(90deg);
+        }
+    }
+}

@@ -1,0 +1,28 @@
+include ../b-avatar/mixins
+include ../b-chat-file/b-chat-file_mixin
+include ../b-chat-link/b-chat-link_mixin
+
+mixin b-chat-summary-item(model)
+    - var createDate = moment.utc(model.createdAt).user()
+    - var links = model.links
+    - var files = model.files
+
+    .b-chat-summary-item(class=attributes.class || '')
+        .b-chat-summary-item__content
+            +avatar(model.creator)(class='b-chat-summary-item__employee-avatar b-avatar_size_m')
+            .b-chat-summary-item__message!=model.text.firstLetterUppercaseHtml()
+            if files && files.length || links && links.length
+                .b-chat-summary-item__file-wrap
+                    each link in links
+                        +chat-link(link)(class='b-chat-summary-item__file')
+                    each attach in files
+                        +chat-file(attach, model.taskId)(class='b-chat-summary-item__file')
+            .b-chat-summary-item__toggle-view-btn
+                .b-chat-summary-item__toggle-view-btn-content
+                    i.b-icon-sc.b-chat-summary-item__toggle-view-btn-icon
+                    .b-chat-summary-item__toggle-view-btn-text #{iget.en('More')}
+        .b-chat-summary-item__dropdown
+            .b-chat-summary-item__dropdown-person-fullname=model.creator.fullName
+                +avatar(model.creator)(class='b-chat-summary-item__dropdown-avatar b-avatar_size_m')
+            .b-chat-summary-item__dropdown-create-date #{iget.en('On') + createDate.format(' MMMM DD ') + iget.en('at') + createDate.format(' HH:mm')}
+            .b-chat-summary-item__dropdown-button=iget.en('Remove from description')
